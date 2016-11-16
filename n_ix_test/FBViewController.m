@@ -104,6 +104,7 @@
         [self didGetProfileResponse];
                                         }];
     [uploadTask resume];
+    [request release];
 }
 
 - (void)didGetProfileResponse

@@ -17,9 +17,9 @@
 @interface ViewController ()<MapViewDelegate>
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
-@property   (nonatomic, assign) FBViewController *fbLogin;
+@property   (nonatomic, retain) FBViewController *fbLogin;
 
-@property   (nonatomic, assign)  MapViewController *map;
+@property   (nonatomic, retain)  MapViewController *map;
 @end
 
 @implementation ViewController
@@ -45,8 +45,6 @@
 
 - (void)saveUserToCoreDataIfNeeded{
     
-    __block NSSet *set = nil;
-    
     NSPersistentContainer *container = [self persistentContainer];
     
     [container performBackgroundTask:^(NSManagedObjectContext *context){
@@ -60,7 +58,7 @@
         for (User *user in fetchedObjects)
             if([user.name isEqualToString: self.fbLogin.fbUserName])
             {
-                set = [[user hasArray] retain];
+                NSSet *set = [user hasArray];
                 [self setForUserFound:set];
                 currentUser = user;
                 break;
